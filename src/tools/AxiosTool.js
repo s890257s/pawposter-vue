@@ -26,4 +26,4 @@ apiService.interceptors.response.use(
   }
 );
 
-export const createRequest = (config) => apiService(config);
+export const request = (config) => apiService(config);
