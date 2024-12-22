@@ -35,6 +35,13 @@ const router = createRouter({
       path: "/admin",
       component: () => import("@/layouts/AdminLayout.vue"),
     },
+
+    // === 404 ===
+    {
+      path: "/:pathMatch(.*)*",
+      name: "page_not_found",
+      component: () => import("@/layouts/PageNotFound.vue"),
+    },
   ],
 });
 
