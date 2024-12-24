@@ -1,13 +1,27 @@
+// === app ===
+import { createApp } from "vue";
+import App from "./App.vue";
 
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
+const app = createApp(App);
 
-import App from './App.vue'
-import router from './router'
+// === router ===
+import router from "./router";
+app.use(router);
 
-const app = createApp(App)
+// === vuetify ===
+import "vuetify/styles";
+import { createVuetify } from "vuetify";
+import * as components from "vuetify/components";
+import * as directives from "vuetify/directives";
+const vuetify = createVuetify({
+  components,
+  directives,
+});
+app.use(vuetify);
 
-app.use(createPinia())
-app.use(router)
+// === pinia ===
+import { createPinia } from "pinia";
+app.use(createPinia());
 
-app.mount('#app')
+// === mount ===
+app.mount("#app");
