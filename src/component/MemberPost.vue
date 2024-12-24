@@ -1,26 +1,10 @@
 <script setup>
-const post = {
-  memberName: "Alice",
-  memberPhoto: "",
-  postText: "今天帶狗狗去公園玩，牠特別喜歡追球球！",
-  createdDate: "2024-12-24",
-  replies: [
-    {
-      replyId: "1",
-      replyText: "好好好",
-      memberName: "Tom",
-      createdDate: "2024-12-21",
-    },
-    {
-      replyId: "2",
-      replyText: "OK",
-      memberName: "Tom",
-      createdDate: "2024-12-22",
-    },
-  ],
-};
+import { defineProps } from "vue";
 
-const { memberName, postText, createdDate, memberPhoto, replies } = post;
+const { post } = defineProps(["post"]);
+
+const { memberName, postText, createdDate, memberPhoto, replies, resources } =
+  post;
 </script>
 
 <template>
@@ -33,7 +17,7 @@ const { memberName, postText, createdDate, memberPhoto, replies } = post;
           <template #title>
             <div class="title">
               <div class="member_home">
-                <img src="/src/assets/image/m.png" class="avatar" />
+                <img :src="memberPhoto" class="avatar" />
                 {{ memberName }}
               </div>
               <div class="createdDate">{{ createdDate }}</div>
@@ -47,10 +31,9 @@ const { memberName, postText, createdDate, memberPhoto, replies } = post;
 
           <!-- 貼文圖片 -->
           <div class="image_home">
-            <img src="/src/assets/image/a.jpg" class="post_image" />
-            <img src="/src/assets/image/a.jpg" class="post_image" />
-            <img src="/src/assets/image/a.jpg" class="post_image" />
-            <img src="/src/assets/image/a.jpg" class="post_image" />
+            <template v-for="resource in resources">
+              <img :src="resource.content" class="post_image" />
+            </template>
           </div>
 
           <!-- 留言按鈕 -->
@@ -75,17 +58,18 @@ const { memberName, postText, createdDate, memberPhoto, replies } = post;
             <v-row v-for="reply in replies" :key="reply.replyId">
               <v-col>
                 <v-card variant="tonal">
-                  <!-- 留言 -->
+                  <!-- 留言者 -->
                   <template #title>
                     <div class="title">
                       <div class="member_home">
-                        <img src="/src/assets/image/m.png" class="avatar" />
+                        <img :src="reply.memberPhoto" class="avatar" />
                         {{ reply.memberName }}
                       </div>
                       <div class="createdDate">{{ reply.createdDate }}</div>
                     </div>
                   </template>
 
+                  <!-- 留言文字 -->
                   <template #text>
                     <div class="text">{{ reply.replyText }}</div>
                   </template>

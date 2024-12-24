@@ -1,36 +1,37 @@
 <script setup>
-  import { ref } from 'vue'
+import { ref } from "vue";
 
-const drawer = ref(true)
+const drawer = ref(true);
 
 const items = ref([
   {
-    title: 'Dashboard',
-    prependIcon: 'mdi-view-dashboard-outline',
+    title: "Dashboard",
+    prependIcon: "mdi-view-dashboard-outline",
     link: true,
   },
   {
-    title: 'Team',
-    prependIcon: 'mdi-account-group',
+    title: "Team",
+    prependIcon: "mdi-account-group",
     link: true,
   },
   {
-    title: 'Projects',
-    prependIcon: 'mdi-briefcase-outline',
+    title: "Projects",
+    prependIcon: "mdi-briefcase-outline",
     link: true,
   },
   {
-    title: 'Calendar',
-    prependIcon: 'mdi-calendar',
+    title: "Calendar",
+    prependIcon: "mdi-calendar",
     link: true,
   },
   {
-    title: 'Reports',
-    prependIcon: 'mdi-file-chart-outline',
+    title: "Reports",
+    prependIcon: "mdi-file-chart-outline",
     link: true,
   },
-])
+]);
 
+const title = import.meta.env.VITE_APP_TITLE;
 </script>
 
 <template>
@@ -50,17 +51,28 @@ const items = ref([
     </v-navigation-drawer>
 
     <v-app-bar border="b" class="ps-4" flat>
-      <v-app-bar-nav-icon v-if="$vuetify.display.smAndDown" @click="drawer = !drawer" />
+      <v-app-bar-nav-icon
+        v-if="$vuetify.display.smAndDown"
+        @click="drawer = !drawer"
+      />
 
-      <v-app-bar-title>Application</v-app-bar-title>
+      <v-app-bar-title>{{ title }}</v-app-bar-title>
 
       <template #append>
         <v-btn class="text-none me-2" height="48" icon slim>
-          <v-avatar color="surface-light" image="https://cdn.vuetifyjs.com/images/john.png" size="32" />
+          <v-avatar
+            color="surface-light"
+            image="https://cdn.vuetifyjs.com/images/john.png"
+            size="32"
+          />
 
           <v-menu activator="parent">
             <v-list density="compact" nav>
-              <v-list-item append-icon="mdi-cog-outline" link title="Settings" />
+              <v-list-item
+                append-icon="mdi-cog-outline"
+                link
+                title="Settings"
+              />
 
               <v-list-item append-icon="mdi-logout" link title="Logout" />
             </v-list>
@@ -71,9 +83,7 @@ const items = ref([
 
     <v-main>
       <div class="pa-4">
-
-<router-view></router-view>
-
+        <router-view></router-view>
       </div>
     </v-main>
   </v-layout>

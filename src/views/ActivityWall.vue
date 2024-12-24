@@ -51,35 +51,16 @@ async function fetchData({ done }) {
 </script>
 
 <template>
-<MemberPost></MemberPost>
 
-  <!-- <v-infinite-scroll :height="'100%'" :onLoad="fetchData">
+  <v-infinite-scroll :height="'100%'" :onLoad="fetchData">
     <div v-for="post in posts" :key="post.postId">
-      <hr />
-      <div>貼文者: {{ post.memberName }}, id={{ post.postId }}</div>
-      <div>內容: {{ post.postText }}</div>
-      <div>tag: {{ post.tagNames }}</div>
-      <div style="background-color: darkgrey">
-        <template
-          v-for="resource in post.resources"
-          :key="resource.postResourceId"
-        >
-          <img :src="resource.content" width="100px" />
-        </template>
-      </div>
-
-      <div style="background-color: papayawhip">
-        <div>【留言】</div>
-        <div v-for="reply in post.replies" :key="reply.replyId">
-          <div>{{ reply.memberName }} 說: {{ reply.replyText }}</div>
-        </div>
-      </div>
+      <MemberPost :post="post"></MemberPost>
     </div>
 
     <template #empty>
       <div>沒有更多貼文了</div>
     </template>
-  </v-infinite-scroll> -->
+  </v-infinite-scroll>
 </template>
 
 <style scoped></style>
