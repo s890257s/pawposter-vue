@@ -1,8 +1,10 @@
 <script setup>
 import { GET_POSTS_API } from "@/api/PostApi";
 import { onMounted, ref, computed } from "vue";
+import { useLoggedInStore } from "../../store/LoggedInStore";
 import MemberPost from "@/component/MemberPost.vue";
 import CreatePost from "@/component/CreatePost.vue";
+const loggedInStroe = useLoggedInStore();
 
 /* === 顯示貼文 === */
 const posts = ref([]);
@@ -46,7 +48,7 @@ async function fetchData({ done }) {
 </script>
 
 <template>
-  <CreatePost></CreatePost>
+  <CreatePost v-if="loggedInStroe.isLoggedIn"></CreatePost>
 
   <v-infinite-scroll :height="'100%'" :onLoad="fetchData">
     <div v-for="post in posts" :key="post.postId">

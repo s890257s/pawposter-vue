@@ -1,13 +1,24 @@
 <script setup>
 import { ref } from "vue";
-import { useLoggedInStore } from "../../store/LoggedInStore";
+import { useLoggedInStore } from "/store/LoggedInStore";
+import PostImageHandler from "./PostImageHandler.vue";
+import { POST_POST_API } from "@/api/PostApi";
+
 const loggedInStroe = useLoggedInStore();
 
-const postText = ref("HI");
+const postText = ref("");
 
 function post() {
-    console.log(postText.value)
+  const fd = new FormData();
+  fd.append("text", postText.value);
+
+  photos.forEach((photo) => fd.append("files", photo.p));
+
+
+  POST_POST_API(fd);
 }
+
+const photos = [];
 </script>
 
 <template>
@@ -39,11 +50,12 @@ function post() {
           </template>
 
           <!-- 貼文圖片 -->
-          <div class="image_home"></div>
+          <PostImageHandler v-model:photos="photos"></PostImageHandler>
 
-          <!-- 留言按鈕 -->
+          <!-- 功能按鈕組 -->
           <v-card-actions>
-            <div class="end" v-show="loggedInStroe.isLoggedIn">
+            <div class="functional_buttons" v-show="loggedInStroe.isLoggedIn">
+              <!-- 貼文 -->
               <v-btn
                 @click="post"
                 color="info"
@@ -83,11 +95,13 @@ function post() {
   gap: 10px;
 }
 
-.end {
+.functional_buttons {
   display: flex;
   width: 100%;
   justify-content: end;
+  align-items: center;
   padding-right: 20px;
   margin-bottom: 10px;
+  gap: 15px;
 }
 </style>

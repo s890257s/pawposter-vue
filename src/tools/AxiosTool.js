@@ -5,20 +5,23 @@ const loggedInStore = useLoggedInStore();
 // === 建立 apiService 物件，設定基礎屬性 ===
 const apiService = axios.create({
   baseURL: "http://localhost:8080",
-  headers: { "Content-Type": "application/json" },
 });
 
 // === 請求攔截器 ===
 apiService.interceptors.request.use((config) => {
   const token = loggedInStore.token;
-
   // 請求前附加 token
   if (token) {
-    console.log(token)
     config.headers.Authorization = `Bearer ${token}`;
   }
 
-  return config;
+  const defaultConfig = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  return { ...defaultConfig, ...config };
 });
 
 // === 回應攔截器 ===
@@ -36,9 +39,11 @@ apiService.interceptors.response.use(
       return;
     }
 
-    // 登入失敗
+    // 登入失敗或 token 過期
     if (status == 401) {
       alert(`${data}`);
+
+      loggedInStore.logout();
       return;
     }
   }
