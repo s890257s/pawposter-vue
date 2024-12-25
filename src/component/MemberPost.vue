@@ -1,10 +1,16 @@
 <script setup>
 import { defineProps } from "vue";
+import { useLoggedInStore } from "../../store/LoggedInStore";
+const loggedInStroe=useLoggedInStore();
 
+
+// === 解析參數 ===
 const { post } = defineProps(["post"]);
-
 const { memberName, postText, createdDate, memberPhoto, replies, resources } =
   post;
+
+// === 取得登入狀態 ===
+
 </script>
 
 <template>
@@ -38,7 +44,7 @@ const { memberName, postText, createdDate, memberPhoto, replies, resources } =
 
           <!-- 留言按鈕 -->
           <v-card-actions>
-            <div class="end">
+            <div class="end" v-show="loggedInStroe.isLoggedIn">
               <v-btn rounded="xl" color="primary" variant="outlined">
                 留言
               </v-btn>

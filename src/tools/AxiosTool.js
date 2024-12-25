@@ -1,4 +1,6 @@
 import axios from "axios";
+import { useLoggedInStore } from "/store/LoggedInStore";
+const loggedInStore = useLoggedInStore();
 
 // === 建立 apiService 物件，設定基礎屬性 ===
 const apiService = axios.create({
@@ -8,10 +10,13 @@ const apiService = axios.create({
 
 // === 請求攔截器 ===
 apiService.interceptors.request.use((config) => {
-  const token = "";
+  const token = loggedInStore.token;
 
   // 請求前附加 token
-  config.headers.Authorization = `Bearer ${token}`;
+  if (token) {
+    console.log(token)
+    config.headers.Authorization = `Bearer ${token}`;
+  }
 
   return config;
 });
@@ -23,6 +28,19 @@ apiService.interceptors.response.use(
   },
   (error) => {
     // 回應的錯誤處理寫在這
+    const { status, data } = error.response;
+
+    // 參數錯誤
+    if (status == 400) {
+      alert(`請求參數錯誤:${data}`);
+      return;
+    }
+
+    // 登入失敗
+    if (status == 401) {
+      alert(`${data}`);
+      return;
+    }
   }
 );
 

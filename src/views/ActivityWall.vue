@@ -3,14 +3,6 @@ import { GET_POSTS_API } from "@/api/PostApi";
 import { onMounted, ref, computed } from "vue";
 import MemberPost from "@/component/MemberPost.vue";
 
-const post = {
-  postId: 1,
-  postText: "Hello word!",
-  memberId: 1,
-  memberName: "Alice",
-  tagNames: ["tag1", "tag2", "tag3"],
-};
-
 /* === 顯示貼文 === */
 const posts = ref([]);
 
