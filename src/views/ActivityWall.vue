@@ -2,6 +2,7 @@
 import { GET_POSTS_API } from "@/api/PostApi";
 import { onMounted, ref, computed } from "vue";
 import MemberPost from "@/component/MemberPost.vue";
+import CreatePost from "@/component/CreatePost.vue";
 
 /* === 顯示貼文 === */
 const posts = ref([]);
@@ -40,9 +41,12 @@ async function fetchData({ done }) {
 
   done("ok");
 }
+
+/* === 新增貼文 === */
 </script>
 
 <template>
+  <CreatePost></CreatePost>
 
   <v-infinite-scroll :height="'100%'" :onLoad="fetchData">
     <div v-for="post in posts" :key="post.postId">
