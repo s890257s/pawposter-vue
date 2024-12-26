@@ -1,16 +1,20 @@
 <script setup>
 import { defineProps } from "vue";
-import { useLoggedInStore } from "../../store/LoggedInStore";
-const loggedInStroe=useLoggedInStore();
+import { useLoggedInStore } from "@/stores/LoggedInStore";
+import { DELETE_POST_API } from "@/api/PostApi";
 
+const loggedInStroe = useLoggedInStore();
 
 // === 解析參數 ===
 const { post } = defineProps(["post"]);
 const { memberName, postText, createdDate, memberPhoto, replies, resources } =
   post;
 
-// === 取得登入狀態 ===
-
+// === 刪除貼文 ===
+async function deletePost(postId) {
+  await DELETE_POST_API(postId);
+  location.reload();
+}
 </script>
 
 <template>
@@ -42,9 +46,20 @@ const { memberName, postText, createdDate, memberPhoto, replies, resources } =
             </template>
           </div>
 
-          <!-- 留言按鈕 -->
+          <!-- 功能按鈕 -->
           <v-card-actions>
-            <div class="end" v-show="loggedInStroe.isLoggedIn">
+            <div class="functional_buttons" v-show="loggedInStroe.isLoggedIn">
+              <!-- 刪除按鈕 -->
+              <v-btn
+                rounded="xl"
+                color="red"
+                variant="outlined"
+                v-if="post.memberId == loggedInStroe.memberId"
+                @click="deletePost(post.postId)"
+              >
+                刪除
+              </v-btn>
+              <!-- 留言按鈕 -->
               <v-btn rounded="xl" color="primary" variant="outlined">
                 留言
               </v-btn>
@@ -104,6 +119,7 @@ const { memberName, postText, createdDate, memberPhoto, replies, resources } =
   margin: 3px;
   border: 3px solid black;
   width: 200px;
+  height: 200px;
 }
 
 .image_home {
@@ -115,12 +131,13 @@ const { memberName, postText, createdDate, memberPhoto, replies, resources } =
   scrollbar-width: thin;
 }
 
-.end {
+.functional_buttons {
   display: flex;
   width: 100%;
   justify-content: end;
   padding-right: 20px;
   margin-bottom: 10px;
+  gap: 10px;
 }
 
 .title {

@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue";
-import { useLoggedInStore } from "../../store/LoggedInStore";
+import { useLoggedInStore } from "@/stores/LoggedInStore";
+
 import router from "@/router";
 const loggedInStore = useLoggedInStore();
 

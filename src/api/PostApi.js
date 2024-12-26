@@ -22,3 +22,10 @@ export const POST_POST_API = (post) => {
     },
   });
 };
+
+export const DELETE_POST_API = (postId) => {
+  return request({
+    method: "DELETE",
+    url: `${BASE_API}/${postId}`,
+  });
+};

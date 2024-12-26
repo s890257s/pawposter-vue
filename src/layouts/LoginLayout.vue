@@ -2,7 +2,7 @@
 import { ref } from "vue";
 import router from "@/router";
 import { POST_LOGIN_API } from "@/api/AuthApi";
-import { useLoggedInStore } from "../../store/LoggedInStore";
+import { useLoggedInStore } from "../stores/LoggedInStore";
 const loggedInStore = useLoggedInStore();
 
 const email = ref("alice@mail.com");
@@ -21,8 +21,8 @@ async function login() {
     return;
   }
 
-  const { jwtToken, memberName, memberPhoto } = loggedInMember;
-  loggedInStore.login(jwtToken, memberName, memberPhoto);
+  loggedInStore.login(loggedInMember);
+
   router.replace("/");
 }
 

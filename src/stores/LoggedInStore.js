@@ -14,16 +14,18 @@ export const useLoggedInStore = defineStore("LoggedInStore", {
         token: "",
         memberName: "",
         memberPhoto: "",
+        memberId: -1,
       },
     };
   },
 
   actions: {
-    login(token, memberName, memberPhoto) {
+    login(loggedInMember) {
       this.memberInfo.isLoggedIn = true;
-      this.memberInfo.token = token;
-      this.memberInfo.memberName = memberName;
-      this.memberInfo.memberPhoto = memberPhoto;
+      this.memberInfo.token = loggedInMember.jwtToken;
+      this.memberInfo.memberName =  loggedInMember.memberName;
+      this.memberInfo.memberPhoto =  loggedInMember.memberPhoto;
+      this.memberInfo.memberId =  loggedInMember.memberId;
     },
     logout() {
       this.memberInfo = {
@@ -31,6 +33,7 @@ export const useLoggedInStore = defineStore("LoggedInStore", {
         token: "",
         memberName: "",
         memberPhoto: "",
+        memberId: -1,
       };
     },
   },
@@ -43,5 +46,7 @@ export const useLoggedInStore = defineStore("LoggedInStore", {
     token: (state) => state.memberInfo.token,
 
     memberPhoto: (state) => state.memberInfo.memberPhoto,
+
+    memberId: (state) => state.memberInfo.memberId,
   },
 });

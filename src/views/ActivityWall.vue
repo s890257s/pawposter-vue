@@ -1,9 +1,9 @@
 <script setup>
 import { GET_POSTS_API } from "@/api/PostApi";
 import { onMounted, ref, computed } from "vue";
-import { useLoggedInStore } from "../../store/LoggedInStore";
-import MemberPost from "@/component/MemberPost.vue";
-import CreatePost from "@/component/CreatePost.vue";
+import { useLoggedInStore } from "../stores/LoggedInStore";
+import MemberPost from "@/components/MemberPost.vue";
+import CreatePost from "@/components/CreatePost.vue";
 const loggedInStroe = useLoggedInStore();
 
 /* === 顯示貼文 === */
@@ -15,7 +15,7 @@ onMounted(async () => {
 
 // 分頁資訊
 const paginationParams = {
-  page: 0,
+  page: -1,
   size: 5,
   direction: "DESC",
   sort: "createdDate",

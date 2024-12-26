@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useLoggedInStore } from "/store/LoggedInStore";
+import { useLoggedInStore } from "@/stores/LoggedInStore";
 const loggedInStore = useLoggedInStore();
 
 // === 建立 apiService 物件，設定基礎屬性 ===

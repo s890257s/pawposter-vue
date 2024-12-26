@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from "vue";
-import { useLoggedInStore } from "/store/LoggedInStore";
+import { useLoggedInStore } from "@/stores/LoggedInStore";
 import PostImageHandler from "./PostImageHandler.vue";
 import { POST_POST_API } from "@/api/PostApi";
 
@@ -8,14 +8,26 @@ const loggedInStroe = useLoggedInStore();
 
 const postText = ref("");
 
-function post() {
+async function post() {
   const fd = new FormData();
   fd.append("text", postText.value);
 
   photos.forEach((photo) => fd.append("files", photo.p));
 
+  const newPost = await POST_POST_API(fd);
 
-  POST_POST_API(fd);
+  if (!newPost) {
+    return;
+  }
+
+  resetPost();
+
+  location.reload();
+}
+
+function resetPost() {
+  postText.value = "";
+  photos.length = 0;
 }
 
 const photos = [];
@@ -63,6 +75,7 @@ const photos = [];
                 variant="elevated"
                 append-icon="mdi-post"
                 size="large"
+                :disabled="!postText"
               >
                 貼文
               </v-btn>
